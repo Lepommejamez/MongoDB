@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', (event) =>
                 }
         });
 
-        // Codigo para modificar la tabla autor
+        // Codigo para modificar la tabla Autor
         document.getElementById('autorInsertarButton').addEventListener('click', function() {
             var autorName = document.getElementById('inputAutorInsertar').value;
             fetch('/insert_author', {
@@ -222,6 +222,41 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({name: authorName})
+            });
+        });
+
+        // Codigo para modificar la tabla Libro
+        document.getElementById('libroInsertarButton').addEventListener('click', function() {
+            var libroName = document.getElementById('inputLibroInsertar').value;
+            fetch('/insert_book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: libroName})
+            });
+        });
+
+        document.getElementById('libroActualizarButton').addEventListener('click', function() {
+            var oldBookName = document.getElementById('inputLibroActualizar1').value;
+            var newBookName = document.getElementById('inputLibroActualizar2').value;
+            fetch('/update_book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({oldName: oldBookName, newName: newBookName})
+            });
+        });
+
+        document.getElementById('libroBorrarButton').addEventListener('click', function() {
+            var bookName = document.getElementById('inputLibroBorrar').value;
+            fetch('/delete_book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: bookName})
             });
         });
     });
