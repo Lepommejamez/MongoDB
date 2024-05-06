@@ -8,11 +8,123 @@
 <body>
     <h1>Welcome to my Flask app!</h1>
     <h2>Eliga que tabla desea modificar</h2>
-    <select id="myDropdown" name="myDropdown">
-        <option value="option1">Libros</option>
-        <option value="option2">Autores</option>
-        <option value="option3">Edicion</option>
+    <select id="dropdown1" name="dropdownTabla">
+        <option value="Autor">Autor</option>
+        <option value="Libro">Libro</option>
+        <option value="Edicion">Edicion</option>
+        <option value="Usuario">Usuario</option>
     </select>
-    <button id="myButton" type="button" onclick="myFunction()">Click Me!</button>
+
+    <div id="fieldsAutor">
+        <h3>Autor</h3>
+        <select id="dropdownAutores" name="dropdownAutores">
+            <option value="Insertar">Insertar</option>
+            <option value="Actualizar">Actualizar</option>
+            <option value="Borrar">Borrar</option>
+        </select>
+
+        <div id = "autorInsertar">
+            <h4>Insertar Autor</h4>
+            <input type="text" id="inputAutorInsertar" placeholder="Ingrese nombre del autor">
+            <button id="autorInsertarButton" type="button">Insertar</button>
+        </div>
+
+        <div id = "autorActualizar" style="display: none;">
+            <h4>Actualizar Autor</h4>
+            <input type="text" id="inputAutorActualizar" placeholder="Ingrese nombre del autor">
+            <button id="autorActualizarButton" type="button">Actualizar</button>
+        </div>
+
+        <div id = "autorBorrar" style="display: none;">
+            <h4>Borrar Autor</h4>
+            <input type="text" id="inputAutorBorrar" placeholder="Ingrese nombre del autor">
+            <button id="autorActualizarButton" type="button">Borrar</button>
+        </div>
+    </div>
+    
+    <div id="fieldsLibro" style="display: none;">
+        <h3>Libro</h3>
+        <select id="dropdownLibro" name="dropdownLibro">
+            <option value="Insertar">Insertar</option>
+            <option value="Actualizar">Actualizar</option>
+            <option value="Borrar">Borrar</option>
+        </select>
+
+        <div id = "libroInsertar">
+            <h4>Insertar Libro</h4>
+            <input type="text" id="inputLibroInsertar" placeholder="Ingrese titulo del libro">
+            <button id="libroInsertarButton" type="button">Insertar</button>
+        </div>
+
+        <div id = "libroActualizar" style="display: none;">
+            <h4>Actualizar Libro</h4>
+            <input type="text" id="inputLibroActualizar" placeholder="Ingrese titulo del libro">
+            <button id="libroActualizarButton" type="button">Actualizar</button>
+        </div>
+
+        <div id = "libroBorrar" style="display: none;">
+            <h4>Borrar Libro</h4>
+            <input type="text" id="inputLibroBorrar" placeholder="Ingrese titulo del libro">
+            <button id="libroBorrarButton" type="button">Borrar</button>
+        </div>
+    </div>
+    
+    <div id="fieldsEdicion" style="display: none;">
+        <h3>Edicion</h3>
+        <select id="dropdownEdicion" name="dropdownEdicion">
+            <option value="Insertar">Insertar</option>
+            <option value="Actualizar">Actualizar</option>
+            <option value="Borrar">Borrar</option>
+        </select>
+
+        <div id = "edicionInsertar">
+            <h4>Insertar Edicion</h4>
+            <input type="text" id="inputEdicionInsertar1" placeholder="Ingrese ISBN">
+            <input type="text" id="inputEdicionInsertar2" placeholder="Ingrese año">
+            <input type="text" id="inputEdicionInsertar1" placeholder="Ingrese Idioma">
+            <button id="edicionInsertarButton" type="button">Insertar</button>
+        </div>
+
+        <div id = "edicionActualizar" style="display: none;">
+            <h4>Actualizar Edicion</h4>
+            <input type="text" id="inputEdicionActualizar1" placeholder="Ingrese ISBN">
+            <button id="edicionActualizarButton" type="button">Actualizar</button>
+        </div>
+
+        <div id = "edicionBorrar" style="display: none;">
+            <h4>Borrar Edicion</h4>
+            <input type="text" id="inputEdicionBorrar" placeholder="Ingrese ISBN">
+            <button id="edicionBorrarButton" type="button">Borrar</button>
+        </div>
+    </div>
+
+    <div id="fieldsUsuario" style="display: none;">
+        <h3>Copia</h3>
+        <select id="dropdownUsuario" name="dropdownUsuario">
+            <option value="Insertar">Insertar</option>
+            <option value="Actualizar">Actualizar</option>
+            <option value="Borrar">Borrar</option>
+        </select>
+
+        <div id = "usuarioInsertar">
+            <h4>Insertar Usuario</h4>
+            <input type="text" id="inputUsuarioInsertar1" placeholder="Ingrese RUT del usuario">
+            <input type="text" id="inputUsuarioInsertar2" placeholder="Ingrese nombre del usuario">
+            <button id="usuarioInsertarButton" type="button">Insertar</button>
+        </div>
+
+        <div id = "usuarioActualizar" style="display: none;">
+            <h4>Actualizar Usuario</h4>
+            <input type="text" id="inputUsuarioActualizar1" placeholder="Ingrese RUT del usuario a actualizar">
+            <input type="text" id="inputUsuarioActualizar2" placeholder="Ingrese nombre del usuario">
+            <button id="usuarioActualizarButton" type="button">Actualizar</button>
+        </div>
+
+        <div id = "usuarioBorrar" style="display: none;">
+            <h4>Borrar Usuario</h4>
+            <input type="text" id="inputUsuarioBorrar" placeholder="Ingrese RUT del usuario a borrar">
+        </div>
+    </div>
+    
 </body>
 </html>
