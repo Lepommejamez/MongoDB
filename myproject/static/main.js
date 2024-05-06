@@ -7,21 +7,6 @@ function myFunction()
 
 document.addEventListener('DOMContentLoaded', (event) => 
     {
-        /*
-        document.getElementById('myButton').addEventListener('click', function() 
-        {
-            var selectedOption = document.getElementById('myDropdown').value;
-            fetch('/selected_option', 
-            {
-                method: 'POST',
-                headers: 
-                {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({option: selectedOption})
-            });
-        });*/
-
         document.getElementById('dropdown1').addEventListener('change', function() 
         {
             var selectedOption = this.value;
@@ -31,6 +16,8 @@ document.addEventListener('DOMContentLoaded', (event) =>
             document.getElementById('fieldsLibro').style.display = 'none';
             document.getElementById('fieldsEdicion').style.display = 'none';
             document.getElementById('fieldsUsuario').style.display = 'none';
+            document.getElementById('fieldsCopia').style.display = 'none';
+            document.getElementById('fieldsPrestamo').style.display = 'none';
             
             // Mostrar los campos para la opción seleccionada
                   if (selectedOption === 'Autor') 
@@ -48,6 +35,14 @@ document.addEventListener('DOMContentLoaded', (event) =>
             else if (selectedOption === 'Usuario') 
                 {
                     document.getElementById('fieldsUsuario').style.display = 'block';
+                }
+            else if (selectedOption === 'Copia') 
+                {
+                    document.getElementById('fieldsCopia').style.display = 'block';
+                }
+            else if (selectedOption === 'Prestamo') 
+                {
+                    document.getElementById('fieldsPrestamo').style.display = 'block';
                 }
         });
 
@@ -145,5 +140,88 @@ document.addEventListener('DOMContentLoaded', (event) =>
                 {
                     document.getElementById('usuarioBorrar').style.display = 'block';
                 }
+        });
+
+        document.getElementById('dropdownCopia').addEventListener('change', function() 
+        {
+            var selectedOption = this.value;
+            
+            // Ocultar todos los campos
+            document.getElementById('copiaInsertar').style.display = 'none';
+            document.getElementById('copiaActualizar').style.display = 'none';
+            document.getElementById('copiaBorrar').style.display = 'none';
+            
+            // Mostrar los campos para la opción seleccionada
+                  if (selectedOption === 'Insertar') 
+                {
+                    document.getElementById('copiaInsertar').style.display = 'block';
+                } 
+            else if (selectedOption === 'Actualizar') 
+                {
+                    document.getElementById('copiaActualizar').style.display = 'block';
+                } 
+            else if (selectedOption === 'Borrar') 
+                {
+                    document.getElementById('copiaBorrar').style.display = 'block';
+                }
+        });
+
+        document.getElementById('dropdownPrestamo').addEventListener('change', function() 
+        {
+            var selectedOption = this.value;
+            
+            // Ocultar todos los campos
+            document.getElementById('prestamoInsertar').style.display = 'none';
+            document.getElementById('prestamoActualizar').style.display = 'none';
+            document.getElementById('prestamoBorrar').style.display = 'none';
+            
+            // Mostrar los campos para la opción seleccionada
+                  if (selectedOption === 'Insertar') 
+                {
+                    document.getElementById('prestamoInsertar').style.display = 'block';
+                } 
+            else if (selectedOption === 'Actualizar') 
+                {
+                    document.getElementById('prestamoActualizar').style.display = 'block';
+                } 
+            else if (selectedOption === 'Borrar') 
+                {
+                    document.getElementById('prestamoBorrar').style.display = 'block';
+                }
+        });
+
+        // Codigo para modificar la tabla autor
+        document.getElementById('autorInsertarButton').addEventListener('click', function() {
+            var autorName = document.getElementById('inputAutorInsertar').value;
+            fetch('/insert_author', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: autorName})
+            });
+        });
+
+        document.getElementById('autorActualizarButton').addEventListener('click', function() {
+            var oldAuthorName = document.getElementById('inputAutorActualizar1').value;
+            var newAuthorName = document.getElementById('inputAutorActualizar2').value;
+            fetch('/update_author', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({oldName: oldAuthorName, newName: newAuthorName})
+            });
+        });
+
+        document.getElementById('autorBorrarButton').addEventListener('click', function() {
+            var authorName = document.getElementById('inputAutorBorrar').value;
+            fetch('/delete_author', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: authorName})
+            });
         });
     });

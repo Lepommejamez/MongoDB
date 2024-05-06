@@ -13,6 +13,9 @@
         <option value="Libro">Libro</option>
         <option value="Edicion">Edicion</option>
         <option value="Usuario">Usuario</option>
+        <option value="Copia">Copia</option>
+        <option value="Prestamo">Prestamo</option>
+
     </select>
 
     <div id="fieldsAutor">
@@ -31,14 +34,15 @@
 
         <div id = "autorActualizar" style="display: none;">
             <h4>Actualizar Autor</h4>
-            <input type="text" id="inputAutorActualizar" placeholder="Ingrese nombre del autor">
+            <input type="text" id="inputAutorActualizar1" placeholder="Ingrese nombre anterior">
+            <input type="text" id="inputAutorActualizar2" placeholder="Ingrese nombre nuevo">
             <button id="autorActualizarButton" type="button">Actualizar</button>
         </div>
 
         <div id = "autorBorrar" style="display: none;">
             <h4>Borrar Autor</h4>
             <input type="text" id="inputAutorBorrar" placeholder="Ingrese nombre del autor">
-            <button id="autorActualizarButton" type="button">Borrar</button>
+            <button id="autorBorrarButton" type="button">Borrar</button>
         </div>
     </div>
     
@@ -99,7 +103,7 @@
     </div>
 
     <div id="fieldsUsuario" style="display: none;">
-        <h3>Copia</h3>
+        <h3>Usuario</h3>
         <select id="dropdownUsuario" name="dropdownUsuario">
             <option value="Insertar">Insertar</option>
             <option value="Actualizar">Actualizar</option>
@@ -125,6 +129,65 @@
             <input type="text" id="inputUsuarioBorrar" placeholder="Ingrese RUT del usuario a borrar">
         </div>
     </div>
-    
+
+    <div id="fieldsCopia" style="display: none;">
+        <h3>Copia</h3>
+        <select id="dropdownCopia" name="dropdownCopia">
+            <option value="Insertar">Insertar</option>
+            <option value="Actualizar">Actualizar</option>
+            <option value="Borrar">Borrar</option>
+        </select>
+
+        <div id = "copiaInsertar">
+            <h4>Insertar Copia</h4>
+            <input type="text" id="inputCopiaInsertar" placeholder="Ingrese numero">
+            <button id="copiaInsertarButton" type="button">Insertar</button>
+        </div>
+
+        <div id = "copiaActualizar" style="display: none;">
+            <h4>Actualizar Copia</h4>
+            <input type="text" id="inputCopiaActualizar" placeholder="Ingrese numero">
+            <button id="copiaActualizarButton" type="button">Actualizar</button>
+        </div>
+
+        <div id = "copiaBorrar" style="display: none;">
+            <h4>Borrar Copia</h4>
+            <input type="text" id="inputCopiaBorrar" placeholder="Ingrese numero">
+            <button id="copiaBorrarButton" type="button">Borrar</button>
+        </div>
+    </div>
+
+    <div id="fieldsPrestamo" style="display: none;">
+        <h3>Prestamo</h3>
+        <select id="dropdownPrestamo" name="dropdownPrestamo">
+            <option value="Insertar">Insertar</option>
+            <option value="Actualizar">Actualizar</option>
+            <option value="Borrar">Borrar</option>
+        </select>
+
+        <div id = "prestamoInsertar">
+            <h4>Insertar Prestamo</h4>
+            <input type="text" id="inputPrestamoInsertar1" placeholder="Ingrese fecha de devolucion">
+            <input type="text" id="inputPrestamoInsertar2" placeholder="Ingrese fecha de prestamo">
+            <button id="prestamoInsertarButton" type="button">Insertar</button>
+            
+        </div>
+
+        <div id = "prestamoActualizar" style="display: none;">
+            <h4>Actualizar Prestamo</h4>
+            <input type="text" id="inputPrestamoActualizar1" placeholder="Ingrese fecha de devolucion">
+            <input type="text" id="inputPrestamoActualizar2" placeholder="Ingrese fecha de prestamo">
+            <button id="prestamoActualizarButton" type="button">Actualizar</button>
+        </div>
+
+        <div id = "prestamoBorrar" style="display: none;">
+            <h4>Borrar Libro</h4>
+            <input type="text" id="inputPrestamoBorrar1" placeholder="Ingrese fecha de devolucion">
+            <input type="text" id="inputPrestamoBorrar2" placeholder="Ingrese fecha de prestamo">
+            <button id="prestamoBorrarButton" type="button">Borrar</button>
+        </div>
+    </div>
+
+
 </body>
 </html>
