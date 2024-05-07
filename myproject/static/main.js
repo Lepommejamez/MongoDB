@@ -259,4 +259,42 @@ document.addEventListener('DOMContentLoaded', (event) =>
                 body: JSON.stringify({name: bookName})
             });
         });
+
+        // Codigo para modificar la tabla Edicion
+        document.getElementById('edicionInsertarButton').addEventListener('click', function() {
+            var cod = document.getElementById('inputEdicionInsertar1').value;
+            var year = document.getElementById('inputEdicionInsertar2').value;
+            var lang = document.getElementById('inputEdicionInsertar3').value;
+            fetch('/insert_edicion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({code: cod, año: year, language: lang})
+            });
+        });
+
+        /*
+        document.getElementById('libroActualizarButton').addEventListener('click', function() {
+            var oldBookName = document.getElementById('inputLibroActualizar1').value;
+            var newBookName = document.getElementById('inputLibroActualizar2').value;
+            fetch('/update_edicion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({oldName: oldBookName, newName: newBookName})
+            });
+        });
+
+        document.getElementById('libroBorrarButton').addEventListener('click', function() {
+            var bookName = document.getElementById('inputLibroBorrar').value;
+            fetch('/delete_edicion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: bookName})
+            });
+        });*/
     });

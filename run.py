@@ -67,7 +67,38 @@ def delete_book():
 # endregion
 
 # region Insertar/Actualizar/Borrar Edicion
+@app.route('/insert_edicion', methods=['POST'])
+def insert_edicion():
+    data = request.get_json()
+    codigo = data['code']
+    año = data['año']
+    lengua = data['language']
 
+    #Aquí se insertaría el libro en la base de datos
+    print('El codigo de la Edicion ingresado es: ' + codigo)
+    print('El año de la Edicion ingresado es: ' + año)
+    print('La lengua de la Edicion ingresado es: ' + lengua)
+    return jsonify({'success': True})
+
+@app.route('/update_edicion', methods=['POST'])
+def update_edicion():
+    data = request.get_json()
+    oldName = data['oldName']
+    newName = data['newName']
+    
+    #Aquí se actualizaría el libro en la base de datos
+    print('El nombre anterior del autor es: ' + oldName)
+    print('El nuevo nombre del autor es: ' + newName)
+    return jsonify({'success': True})
+
+@app.route('/delete_edicion', methods=['POST'])
+def delete_edicion():
+    data = request.get_json()
+    nombre = data['name']
+
+    #Aquí se borraría el autor de la base de datos
+    print('Se va a borrar el libro con el nombre: ' + nombre)
+    return jsonify({'success': True})
 
 # endregion
 
