@@ -4,6 +4,7 @@
 <head>
     <title>My Flask App</title>
     <script src="/static/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <h1>Welcome to my Flask app!</h1>
@@ -12,8 +13,8 @@
         <option value="Autor">Autor</option>
         <option value="Libro">Libro</option>
         <option value="Edicion">Edicion</option>
-        <option value="Usuario">Usuario</option>
         <option value="Copia">Copia</option>
+        <option value="Usuario">Usuario</option>
         <option value="Prestamo">Prestamo</option>
 
     </select>
@@ -28,7 +29,7 @@
 
         <div id = "autorInsertar">
             <h4>Insertar Autor</h4>
-            <input type="text" id="inputAutorInsertar" placeholder="Ingrese nombre del autor">
+            <input type="text" id="inputAutorInsertar1" placeholder="Ingrese nombre del autor">
             <button id="autorInsertarButton" type="button">Insertar</button>
         </div>
 
@@ -57,6 +58,8 @@
         <div id = "libroInsertar">
             <h4>Insertar Libro</h4>
             <input type="text" id="inputLibroInsertar" placeholder="Ingrese titulo del libro">
+            <input type="text" id="inputLibroInsertar1" placeholder="Ingrese el nombre de su autor">
+            <input type="text" id="inputLibroInsertar2" placeholder="Ingrese el ISBN">
             <button id="libroInsertarButton" type="button">Insertar</button>
         </div>
 
@@ -93,13 +96,38 @@
         <div id = "edicionActualizar" style="display: none;">
             <h4>Actualizar Edicion</h4>
             <input type="text" id="inputEdicionActualizar1" placeholder="Ingrese ISBN">
-            <button id="edicionActualizarButton" type="button">Actualizar</button>
+            <button id="edicionActualizarButton1" type="button">Buscar</button>
+            <input type="text" id="inputEdicionActualizar2" placeholder="Nuevo ISBN">
+            <input type="text" id="inputEdicionActualizar3" placeholder="Nuevo año">
+            <input type="text" id="inputEdicionActualizar4" placeholder="Nuevo Idioma">
+            <button id="edicionActualizarButton2" type="button">Actualizar</button>
         </div>
 
         <div id = "edicionBorrar" style="display: none;">
             <h4>Borrar Edicion</h4>
             <input type="text" id="inputEdicionBorrar" placeholder="Ingrese ISBN">
             <button id="edicionBorrarButton" type="button">Borrar</button>
+        </div>
+    </div>
+
+    <div id="fieldsCopia" style="display: none;">
+        <h3>Copia</h3>
+        <select id="dropdownCopia" name="dropdownCopia">
+            <option value="Insertar">Insertar</option>
+            <option value="Borrar">Borrar</option>
+        </select>
+
+        <div id = "copiaInsertar">
+            <h4>Insertar Copia</h4>
+            <input type="text" id="inputCopiaInsertar1" placeholder="Ingrese numero">
+            <input type="text" id="inputCopiaInsertar2" placeholder="Ingrese ISBN">
+            <button id="copiaInsertarButton" type="button">Insertar</button>
+        </div>
+
+        <div id = "copiaBorrar" style="display: none;">
+            <h4>Borrar Copia</h4>
+            <input type="text" id="inputCopiaBorrar" placeholder="Ingrese numero">
+            <button id="copiaBorrarButton" type="button">Borrar</button>
         </div>
     </div>
 
@@ -121,40 +149,16 @@
         <div id = "usuarioActualizar" style="display: none;">
             <h4>Actualizar Usuario</h4>
             <input type="text" id="inputUsuarioActualizar1" placeholder="Ingrese RUT del usuario a actualizar">
-            <input type="text" id="inputUsuarioActualizar2" placeholder="Ingrese nombre del usuario">
-            <button id="usuarioActualizarButton" type="button">Actualizar</button>
+            <button id="usuarioActualizarButton1" type="button">Buscar</button>
+            <input type="text" id="inputUsuarioActualizar2" placeholder="Ingrese nuevo RUT">
+            <input type="text" id="inputUsuarioActualizar3" placeholder="Ingrese nuevo nombre">
+            <button id="usuarioActualizarButton2" type="button">Actualizar</button>
         </div>
 
         <div id = "usuarioBorrar" style="display: none;">
             <h4>Borrar Usuario</h4>
             <input type="text" id="inputUsuarioBorrar" placeholder="Ingrese RUT del usuario a borrar">
-        </div>
-    </div>
-
-    <div id="fieldsCopia" style="display: none;">
-        <h3>Copia</h3>
-        <select id="dropdownCopia" name="dropdownCopia">
-            <option value="Insertar">Insertar</option>
-            <option value="Actualizar">Actualizar</option>
-            <option value="Borrar">Borrar</option>
-        </select>
-
-        <div id = "copiaInsertar">
-            <h4>Insertar Copia</h4>
-            <input type="text" id="inputCopiaInsertar" placeholder="Ingrese numero">
-            <button id="copiaInsertarButton" type="button">Insertar</button>
-        </div>
-
-        <div id = "copiaActualizar" style="display: none;">
-            <h4>Actualizar Copia</h4>
-            <input type="text" id="inputCopiaActualizar" placeholder="Ingrese numero">
-            <button id="copiaActualizarButton" type="button">Actualizar</button>
-        </div>
-
-        <div id = "copiaBorrar" style="display: none;">
-            <h4>Borrar Copia</h4>
-            <input type="text" id="inputCopiaBorrar" placeholder="Ingrese numero">
-            <button id="copiaBorrarButton" type="button">Borrar</button>
+            <button id="usuarioBorrarButton" type="button">Borrar</button>
         </div>
     </div>
 
@@ -168,8 +172,8 @@
 
         <div id = "prestamoInsertar">
             <h4>Insertar Prestamo</h4>
-            <input type="text" id="inputPrestamoInsertar1" placeholder="Ingrese fecha de devolucion">
-            <input type="text" id="inputPrestamoInsertar2" placeholder="Ingrese fecha de prestamo">
+            <input type="date" id="inputPrestamoInsertar1" placeholder="Ingrese fecha de devolucion">
+            <input type="date" id="inputPrestamoInsertar2" placeholder="Ingrese fecha de prestamo">
             <button id="prestamoInsertarButton" type="button">Insertar</button>
             
         </div>

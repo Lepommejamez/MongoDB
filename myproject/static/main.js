@@ -1,9 +1,16 @@
 // main.js
 console.log("Hello from JavaScript!");
-function myFunction() 
+function success() 
 {
     alert("Operacion Exitosa!");
 }
+
+function error(text) 
+{
+    alert("Ha ocurrido un error! :c " + text);
+}
+
+
 
 document.addEventListener('DOMContentLoaded', (event) => 
     {
@@ -148,7 +155,6 @@ document.addEventListener('DOMContentLoaded', (event) =>
             
             // Ocultar todos los campos
             document.getElementById('copiaInsertar').style.display = 'none';
-            document.getElementById('copiaActualizar').style.display = 'none';
             document.getElementById('copiaBorrar').style.display = 'none';
             
             // Mostrar los campos para la opción seleccionada
@@ -192,7 +198,7 @@ document.addEventListener('DOMContentLoaded', (event) =>
 
         // Codigo para modificar la tabla Autor
         document.getElementById('autorInsertarButton').addEventListener('click', function() {
-            var autorName = document.getElementById('inputAutorInsertar').value;
+            var autorName = document.getElementById('inputAutorInsertar1').value;
             fetch('/insert_author', {
                 method: 'POST',
                 headers: {
@@ -228,12 +234,14 @@ document.addEventListener('DOMContentLoaded', (event) =>
         // Codigo para modificar la tabla Libro
         document.getElementById('libroInsertarButton').addEventListener('click', function() {
             var libroName = document.getElementById('inputLibroInsertar').value;
+            var authorName = document.getElementById('inputLibroInsertar1').value;
+            var bookCode = document.getElementById('inputLibroInsertar2').value;
             fetch('/insert_book', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({name: libroName})
+                body: JSON.stringify({name: libroName , author: authorName, code: bookCode})
             });
         });
 
@@ -274,27 +282,187 @@ document.addEventListener('DOMContentLoaded', (event) =>
             });
         });
 
-        /*
-        document.getElementById('libroActualizarButton').addEventListener('click', function() {
-            var oldBookName = document.getElementById('inputLibroActualizar1').value;
-            var newBookName = document.getElementById('inputLibroActualizar2').value;
+        document.getElementById('edicionActualizarButton1').addEventListener('click', function() {
+            var searchText = document.getElementById('inputEdicionActualizar1').value;
+            fetch('/get_edicion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({text: searchText})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('inputEdicionActualizar2').value = data.field1;
+                document.getElementById('inputEdicionActualizar3').value = data.field2;
+                document.getElementById('inputEdicionActualizar4').value = data.field3;
+            });
+        });
+
+        document.getElementById('edicionActualizarButton2').addEventListener('click', function() {
+            var oldCod = document.getElementById('inputEdicionActualizar1').value;
+            var cod = document.getElementById('inputEdicionActualizar2').value;
+            var year = document.getElementById('inputEdicionActualizar3').value;
+            var lang = document.getElementById('inputEdicionActualizar4').value;
             fetch('/update_edicion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({oldName: oldBookName, newName: newBookName})
+                body: JSON.stringify({prevCode: oldCod, code: cod, año: year, language: lang})
             });
         });
 
-        document.getElementById('libroBorrarButton').addEventListener('click', function() {
-            var bookName = document.getElementById('inputLibroBorrar').value;
+        document.getElementById('edicionBorrarButton').addEventListener('click', function() {
+            var edName = document.getElementById('inputEdicionBorrar').value;
             fetch('/delete_edicion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({name: bookName})
+                body: JSON.stringify({name: edName})
             });
-        });*/
+        });
+
+         // Codigo para modificar la tabla Copia
+        document.getElementById('copiaInsertarButton').addEventListener('click', function() {
+            var num = document.getElementById('inputCopiaInsertar1').value;
+            var ISNB = document.getElementById('inputCopiaInsertar2').value;
+            
+            fetch('/insert_copia', 
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({numero: num , codigo: ISNB})
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Ese numero de copia ya existe");
+                                break;
+                            case '401':
+                                error("La ISBN no existe");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
+        });
+
+        document.getElementById('copiaBorrarButton').addEventListener('click', function() {
+            var numn = document.getElementById('inputCopiaBorrar').value;
+            fetch('/delete_copia', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({num : numn})
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Ese numero de copia ya existe");
+                                break;
+                            case '401':
+                                error("La ISBN no existe");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
+        });
+
+        // Codigo para modificar la tabla Usuario
+        document.getElementById('usuarioInsertarButton').addEventListener('click', function() {
+            var userId = document.getElementById('inputUsuarioInsertar1').value;
+            var userName = document.getElementById('inputUsuarioInsertar2').value;
+            fetch('/insert_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id: userId, name: userName})
+            });
+        });
+
+        document.getElementById('usuarioActualizarButton1').addEventListener('click', function() {
+            var searchText = document.getElementById('inputUsuarioActualizar1').value;
+            fetch('/get_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({text: searchText})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('inputUsuarioActualizar2').value = data.field1;
+                document.getElementById('inputUsuarioActualizar3').value = data.field2;
+            });
+        });
+
+        document.getElementById('usuarioActualizarButton2').addEventListener('click', function() {
+            var searchText = document.getElementById('inputUsuarioActualizar1').value;
+            fetch('/update_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({text: searchText})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('inputUsuarioActualizar2').value = data.field1;
+                document.getElementById('inputUsuarioActualizar3').value = data.field2;
+            });
+        });
+
+        document.getElementById('usuarioBorrarButton').addEventListener('click', function() {
+            var userName = document.getElementById('inputUsuarioBorrar').value;
+            fetch('/delete_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: userName})
+            });
+        });
+
+        //Codigo para modificar la tabla Prestamo
+        document.getElementById('prestamoInsertarButton').addEventListener('click', function() {
+            var fecha1 = document.getElementById('inputPrestamoInsertar1').value;
+            var fecha1 = document.getElementById('inputPrestamoInsertar2').value;
+            fetch('/insert_prestamo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({fechaPrestamo: fecha1, fechaDev: fecha1})
+            });
+        });
+
     });
