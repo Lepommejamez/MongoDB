@@ -29,10 +29,10 @@ def update_author():
 
     autor = autores.find_one({"name": oldName})
     if autor:
-        libros_autor = libros.find({"Autores": oldName})
+        libros_autor = libros.find({"autores": oldName})
         for libro in libros_autor:
-            libros.update_one({"_id": libro["_id"]}, {"$pull": {"Autores": oldName}})
-            libros.update_one({"_id": libro["_id"]}, {"$push": {"Autores": newName}})
+            libros.update_one({"_id": libro["_id"]}, {"$pull": {"autores": oldName}})
+            libros.update_one({"_id": libro["_id"]}, {"$push": {"autores": newName}})
         autores.update_one({"name": oldName}, {"$set": {"name": newName}})
     return jsonify({'success': True})
 
@@ -45,10 +45,10 @@ def delete_author():
 
     autor = autores.find_one({"name": nombre})
     if autor:
-        libros_autor = libros.find({"Autores": nombre})
+        libros_autor = libros.find({"autores": nombre})
         for libro in libros_autor:
-            libros.update_one({"_id": libro["_id"]}, {"$pull": {"Autores": nombre}})
-            libros.update_one({"_id": libro["_id"]}, {"$push": {"Autores": "Autor desconocido"}})
+            libros.update_one({"_id": libro["_id"]}, {"$pull": {"autores": nombre}})
+            libros.update_one({"_id": libro["_id"]}, {"$push": {"autores": "Autor desconocido"}})
         autores.delete_one({"name": nombre})
    
     #Aquí se borraría el autor de la base de datos
@@ -77,9 +77,9 @@ def insert_book():
     #Modificar en la tabla
     if len(list(libros.find({"name": nombre}))) > 0:
         print('El Libro ya existe')
-        libros.find_one_and_update({"name": nombre}, {"$push": {"Autores": author}, "ISBN": data['code']})
+        libros.find_one_and_update({"name": nombre}, {"$push": {"autores": author}, "ISBN": data['code']})
     else:
-        libros.insert_one({"name": nombre, "Autores": [author], "ISBN": data['code']})
+        libros.insert_one({"name": nombre, "autores": [author], "ISBN": data['code']})
 
 
     #print('El nombre del libro ingresado es: ' + nombre + 'y lo escribio: ' + author)
@@ -101,9 +101,6 @@ def update_book():
             autores.update_one({"_id": autor["_id"]}, {"$push": {"libros": newName}})
         libros.update_one({"name": oldName}, {"$set": {"name": newName}})
 
-    #Aquí se actualizaría el libro en la base de datos
-    print('El nombre anterior del autor es: ' + oldName)
-    print('El nuevo nombre del autor es: ' + newName)
     return jsonify({'success': True})
 
 @app.route('/delete_book', methods=['POST'])
@@ -126,9 +123,8 @@ def delete_book():
     return jsonify({'success': True})
 # endregion
 
-#TODO: Probar que se cambien los ISBN de los libros
-# region Insertar/Actualizar/Borrar Edicion
 #DONE
+# region Insertar/Actualizar/Borrar Edicion
 @app.route('/insert_edicion', methods=['POST'])
 def insert_edicion():
     data = request.get_json()
@@ -148,7 +144,6 @@ def insert_edicion():
     #print('La lengua de la Edicion ingresado es: ' + lengua)
     return jsonify({'success': True})
 
-#DONE
 @app.route('/get_edicion', methods=['POST'])
 def get_edicion():
     data = request.get_json()
@@ -163,7 +158,6 @@ def get_edicion():
     
     print("Los resultados del query son: " + result1 + ", " + result2 + ", " + result3)
 
-#TODO: Probar que se cambien los ISBN de los libros
 @app.route('/update_edicion', methods=['POST'])
 def update_edicion():
     data = request.get_json()
@@ -178,7 +172,7 @@ def update_edicion():
     if ed:
         libros_cod = libros.find({"ISBN": old})
         for libro in libros_cod:
-            libros.update_one({"_id": libro["_id"]}, {"$set": {"ISBN": old}})
+            libros.update_one({"_id": libro["_id"]}, {"$set": {"ISBN": codigo}})
         ediciones.update_one({"ISBN": old}, {"$set": {"ISBN": codigo, "año": año, "Idioma": lengua}})
 
     #Aquí se insertaría el libro en la base de datos
@@ -187,7 +181,6 @@ def update_edicion():
     #print('La lengua de la Edicion ingresado es: ' + lengua)
     return jsonify({'success': True})
 
-#DONE
 @app.route('/delete_edicion', methods=['POST'])
 def delete_edicion():
     data = request.get_json()
@@ -246,10 +239,8 @@ def delete_copia():
     #print('Se va a borrar el autor con el nombre: ' + nombre)
 # endregion
 
-#TODO
+#DONE
 # region Insertar/Actualizar/Borrar Usuario
-#TODO
-
 @app.route('/insert_user', methods=['POST'])
 def insert_user():
     data = request.get_json()
@@ -258,28 +249,22 @@ def insert_user():
 
     usuarios = db['Usuario']
     if usuarios.find_one({"rut": rut}):
-        print('El usuario ya existe')
+        response = make_response(jsonify({'success': False}), 400)  # 400 is for Bad Request
     else:
         usuarios.insert_one({"rut": rut, "name": nombre})
-        print('Se ha insertado el usuario con el nombre: ' + nombre + ' y rut: ' + rut)
-    return jsonify({'success': True})
+        response = make_response(jsonify({'success': True}), 200)  # 200 is for OK
+    return response
 
-
-
-
-
-
-
-#TODO !!!
 @app.route('/get_user', methods=['POST'])
 def get_user():
     data = request.get_json()
     rut = data['text']
     usuarios = db['Usuario']
+    print("aaaaa")
 
-    ans = usuarios.find_one({"RUT": rut})
+    ans = usuarios.find_one({"rut": rut})
     if ans:
-        return jsonify({'field1': ans['RUT'], 'field2': ans['nombre']})
+        return jsonify({'field1': ans['rut'], 'field2': ans['name']})
     else:
         return jsonify({'field1': '', 'field2': ''})
     
@@ -287,181 +272,136 @@ def get_user():
     print("Los resultados del query son: " + result1 + ", " + result2 + ", " + result3)
     return jsonify({'field1': result1, 'field2': result2, 'field3': result3})
 
-#TODO !!!
-@app.route('/update_usuario', methods=['POST'])
+@app.route('/update_user', methods=['POST'])
 def update_usuario():
     data = request.get_json()
-    old = data['prevCode']
-    codigo = data['code']
-    año = data['año']
-    lengua = data['language']
-    ediciones = db['Edicion']
-    libros = db['Libro']
+    prevRut = data['oldRUT']
+    rut = data['newRUT']
+    name = data['newName']
 
-    ed = ediciones.find_one({"ISBN": old})
-    if ed:
-        libros_cod = libros.find({"ISBN": old})
-        for libro in libros_cod:
-            libros.update_one({"_id": libro["_id"]}, {"$set": {"ISBN": old}})
-        ediciones.update_one({"ISBN": old}, {"$set": {"ISBN": codigo, "año": año, "Idioma": lengua}})
+    usuario = db['Usuario']
+    prestamo = db['Prestamo']
 
-    #Aquí se insertaría el libro en la base de datos
-    #print('El codigo de la Edicion ingresado es: ' + codigo)
-    #print('El año de la Edicion ingresado es: ' + año)
-    #print('La lengua de la Edicion ingresado es: ' + lengua)
+    us = usuario.find_one({"rut": prevRut})
+    if us:
+        prestamos_usuario = prestamo.find({"rut": prevRut})
+        for prest in prestamos_usuario:
+            prestamo.update_one({"_id": prest["_id"]}, {"$set": {"rut": rut}})
+        usuario.update_one({"rut": prevRut}, {"$set": {"rut": rut, "name": name}})
     return jsonify({'success': True})
-
-
-
-
-
-
-
-
-#TODO
 
 @app.route('/delete_user', methods=['POST'])
 def delete_user():
     data = request.get_json()
     rut = data['rut']
-    usuarios = db['Usuario']
-    copias = db['Copia']
+
+    usuario = db['Usuario']
+    prestamo = db['Prestamo']
     
     usuarios = db['Usuario'] #
-    usuario = usuarios.find_one({"rut": rut})
-    if usuario:
-        usuarioss = usuarios.find({"Usuarios": rut})
-        for copia in usuarioss:
-            usuarios.update_one({"_id": usuario["_id"]}, {"$pull": {"Usuarios": rut}})
-            usuarios.update_one({"_id": usuario["_id"]}, {"$push": {"Usuarios": "Usuario desconocido"}})
-            usuarios.delete_one({"rut": rut})
-            print('Se ha eliminado el usuario con el ID: ' + rut)
-        else:
-            print('No se encontró ningún usuario con el ID proporcionado')
 
-    
-    #Aquí se borraría el autor de la base de datos
-    print('Se va a borrar el usuario con el ID: ' + rut)
-    return jsonify({'success': True})
+    us = usuario.find_one({"rut": rut})
+    if us:
+        prestamos_usuario = prestamo.find({"rut": rut})
+        for prest in prestamos_usuario:
+            prestamo.delete_one({"rut": rut})
+        usuario.delete_one({"rut": rut})
+        response = make_response(jsonify({'success': True}), 200)  # 200 is for OK
+    else:
+        print('No se encontró ningún usuario con el ID proporcionado')
+        response = make_response(jsonify({'success': False}), 400)  # 400 is for Bad Request
 
+    return response
 # endregion
 
-
-
-
-
-
-#TODO
+#DONE
 # region Insertar/Actualizar/Borrar Prestamo
-#TODO
-
-
-
-
-
-
-
-
-
 @app.route('/insert_prestamo', methods=['POST'])
 def insert_prestamo():
     data = request.get_json()
+
     fechaInicio = data['fechaPrestamo']
     fechaFin = data['fechaDev']
     rut = data['rut']
     numCopia = data['copia']
+
     prestamos = db['Prestamo']
     usuarios = db['Usuario']
     copias = db['Copia']
 
-    usuario = usuarios.find_one({"RUT": rut})
+    usuario = usuarios.find_one({"rut": rut})
     copia = copias.find_one({"numero": numCopia})
 
-    if usuario and copia:
-        prestamos.insert_one({"fechaPrestamo": fechaInicio, "fechaDev": fechaFin, "rut": rut, "copia": numCopia})
-        print('Prestamo insertado con éxito')
+    if prestamos.find_one({"copia": numCopia}):
+        disponible = False
     else:
-        print('Usuario o copia no encontrados')
+        disponible = True
 
-    return jsonify({'success': True})
+    if usuario and copia and disponible:
+        prestamos.insert_one({"fechaPrestamo": fechaInicio, "fechaDev": fechaFin, "rut": rut, "copia": numCopia})
+        response = make_response(jsonify({'success': True}), 200)  # 200 is for OK
+    else:
+        if not usuario:
+            response = make_response(jsonify({'success': False}), 400)  # 400 is for Bad Request
+        if not copia:
+            response = make_response(jsonify({'success': False}), 401)  # 401 is for Unauthorized
+        if not disponible:
+            response = make_response(jsonify({'success': False}), 402) # 402 is for Payment Required
+    return response
 
+@app.route('/get_prestamo', methods=['POST'])
+def get_prestamo():
+    data = request.get_json()
+    rut = data['text']
 
+    prestamos = db['Prestamo']
 
+    pres = prestamos.find_one({"copia": rut})
+    if pres:
+        return jsonify({'field1': pres['fechaPrestamo'], 'field2': pres['fechaDev']})
+    else:
+        return jsonify({'field1': '', 'field2': ''})
 
-
-
-
-
-#TODO
 @app.route('/update_prestamo', methods=['POST'])
 def update_prestamo():
     data = request.get_json()
-    oldFechaInicio = data['oldFechaPrestamo']
-    oldFechaFin = data['oldFechaDev']
-    newFechaInicio = data['newFechaPrestamo']
-    newFechaFin = data['newFechaDev']
-    rut = data['rut']
+    
     numCopia = data['copia']
+    fecha1 = data['date1']
+    fecha2 = data['date2']
+
+
     prestamos = db['Prestamo']
     copias = db['Copia']
 
-    prestamo = prestamos.find_one({"fechaPrestamo": oldFechaInicio, "fechaDev": oldFechaFin, "rut": rut, "copia": numCopia})
+    prestamo = prestamos.find_one({"copia": numCopia})
 
     if prestamo:
-        copia_prestamo = copias.find({"numero": numCopia})
-        for copia in copia_prestamo:
-            copias.update_one({"_id": copia["_id"]}, {"$pull": {"prestamos": rut}})
-            copias.update_one({"_id": copia["_id"]}, {"$push": {"prestamos": "Usuario desconocido"}})
-        prestamos.update_one({"fechaPrestamo": oldFechaInicio, "fechaDev": oldFechaFin, "rut": rut, "copia": numCopia}, {"$set": {"fechaPrestamo": newFechaInicio, "fechaDev": newFechaFin}})
+        prestamos.update_one({"copia": numCopia}, {"$set": {"fechaPrestamo": fecha1, "fechaDev": fecha2}})
         print('Prestamo actualizado con éxito')
+        response = make_response(jsonify({'success': True}), 200)  # 200 is for OK
     else:
         print('Prestamo no encontrado')
-
-    return jsonify({'success': True})
-
-
-
-
-
-
-
-
-
+        response = make_response(jsonify({'success': False}), 400)
+    return response
 
 @app.route('/delete_prestamo', methods=['POST'])
 def delete_prestamo():
     data = request.get_json()
-    fechaInicio = data['fechaPrestamo']
-    fechaFin = data['fechaDev']
-    rut = data['rut']
-    numCopia = data['copia']
+    id = data['id']
+
     prestamos = db['Prestamo']
     copias = db['Copia']
 
-    prestamo = prestamos.find_one({"fechaPrestamo": fechaInicio, "fechaDev": fechaFin, "rut": rut, "copia": numCopia})
+    prestamo = prestamos.find_one({"copia": id})
 
     if prestamo:
-        copia_prestamo = copias.find({"numero": numCopia})
-        for copia in copia_prestamo:
-            copias.update_one({"_id": copia["_id"]}, {"$pull": {"prestamos": rut}})
-            copias.update_one({"_id": copia["_id"]}, {"$push": {"prestamos": "Usuario desconocido"}})
-        prestamos.delete_one({"fechaPrestamo": fechaInicio, "fechaDev": fechaFin, "rut": rut, "copia": numCopia})
-        print('Prestamo eliminado con éxito')
+        prestamos.delete_one({"copia": id})
+        response = make_response(jsonify({'success': True}), 200)  # 200 is for OK
     else:
-        print('Prestamo no encontrado')
-    #Aquí se borraría el prestamo de la base de datos
-    return jsonify({'success': True})
-
-
-
-
-
-
-
-
-
-
-
+        response = make_response(jsonify({'success': False}), 400)
+    return response
+# endregion
 
 if __name__ == '__main__':
     app.run(debug=True)

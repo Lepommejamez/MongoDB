@@ -10,8 +10,6 @@ function error(text)
     alert("Ha ocurrido un error! :c " + text);
 }
 
-
-
 document.addEventListener('DOMContentLoaded', (event) => 
     {
         document.getElementById('dropdown1').addEventListener('change', function() 
@@ -381,7 +379,7 @@ document.addEventListener('DOMContentLoaded', (event) =>
                                 error("Ese numero de copia ya existe");
                                 break;
                             case '401':
-                                error("La ISBN no existe");
+                                error("Ese numero de copia no existe");
                                 break;
                             default:
                                 error();
@@ -406,7 +404,30 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({id: userId, name: userName})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Ese RUT ya existe");
+                                break;
+                            case '401':
+                                error("La ISBN no existe");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
         document.getElementById('usuarioActualizarButton1').addEventListener('click', function() {
@@ -426,18 +447,15 @@ document.addEventListener('DOMContentLoaded', (event) =>
         });
 
         document.getElementById('usuarioActualizarButton2').addEventListener('click', function() {
-            var searchText = document.getElementById('inputUsuarioActualizar1').value;
+            var oldId = document.getElementById('inputUsuarioActualizar1').value;
+            var newId = document.getElementById('inputUsuarioActualizar2').value;
+            var sdkjnakdja = document.getElementById('inputUsuarioActualizar3').value;
             fetch('/update_user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({text: searchText})
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('inputUsuarioActualizar2').value = data.field1;
-                document.getElementById('inputUsuarioActualizar3').value = data.field2;
+                body: JSON.stringify({oldRUT: oldId, newRUT: newId, newName: sdkjnakdja})
             });
         });
 
@@ -448,21 +466,135 @@ document.addEventListener('DOMContentLoaded', (event) =>
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({name: userName})
-            });
+                body: JSON.stringify({rut: userName})
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Ese usuario no existe");
+                                break;
+                            case '401':
+                                error("La ISBN no existe");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
         //Codigo para modificar la tabla Prestamo
         document.getElementById('prestamoInsertarButton').addEventListener('click', function() {
             var fecha1 = document.getElementById('inputPrestamoInsertar1').value;
-            var fecha1 = document.getElementById('inputPrestamoInsertar2').value;
+            var fecha2 = document.getElementById('inputPrestamoInsertar2').value;
+            var cod1 = document.getElementById('inputPrestamoInsertar3').value;
+            var cod2 = document.getElementById('inputPrestamoInsertar4').value;
             fetch('/insert_prestamo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({fechaPrestamo: fecha1, fechaDev: fecha1})
+                body: JSON.stringify({fechaPrestamo: fecha1, fechaDev: fecha1, rut: cod1, copia: cod2})
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Usuario no encontrado");
+                                break;
+                            case '401':
+                                error("Copia no encontrada");
+                                break;
+                            case '402':
+                                error("Esa copia del libro ya esta prestada. Intenta de nuevo.");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
+        });
+
+        document.getElementById('prestamoActualizarButton1').addEventListener('click', function() {
+            var searchText = document.getElementById('inputPrestamoActualizar1').value;
+            fetch('/get_prestamo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({text: searchText})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('inputPrestamoActualizar2').value = data.field1;
+                document.getElementById('inputPrestamoActualizar3').value = data.field2;
+            })
+        });
+
+        document.getElementById('prestamoActualizarButton2').addEventListener('click', function() {
+            var id = document.getElementById('inputPrestamoActualizar1').value;
+            var newDate1 = document.getElementById('inputPrestamoActualizar2').value;
+            var newDate2 = document.getElementById('inputPrestamoActualizar3').value;
+            fetch('/update_prestamo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({copia: id, date1: newDate1, date2: newDate2})
             });
         });
+
+        document.getElementById('prestamoBorrarButton').addEventListener('click', function() {
+            var prestamoId = document.getElementById('inputPrestamoBorrar1').value;
+            fetch('/delete_prestamo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id: prestamoId})
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Copia no encontrada.");
+                                break;
+                            case '401':
+                                error("La ISBN no existe");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
+        })
 
     });
