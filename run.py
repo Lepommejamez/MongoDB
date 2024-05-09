@@ -247,21 +247,6 @@ def delete_copia():
 # endregion
 
 #TODO
-# region Insertar/Actualizar/Borrar Prestamo
-@app.route('/insert_prestamo', methods=['POST'])
-def insert_prestamo():
-    data = request.get_json()
-    fechaInicio = data['fechaPrestamo']
-    fechaFin = data['fechaDev']
-
-    #Aquí se insertaría el autor en la base de datos
-    print('Fecha de inicio:', fechaInicio)
-    print('Fecha de fin:', fechaFin)
-    return {'success': True}
-
-# endregion
-
-#TODO
 # region Insertar/Actualizar/Borrar Usuario
 #TODO
 @app.route('/insert_user', methods=['POST'])
@@ -270,8 +255,8 @@ def insert_user():
     nombre = data['name']
     id = data['id']
 
-    #Aquí se insertaría el autor en la base de datos
-    print('El nombre del usuario ingresado es: ' + nombre + ' con id: ' + id)
+    #Aquí se insertaría un usuario en la base de datos
+    print('El nombre del usuario ingresado es: ' + nombre + ' con rut: ' + id)
     return jsonify({'success': True})
 
 #TODO !!!
@@ -326,6 +311,52 @@ def delete_user():
     return jsonify({'success': True})
 
 # endregion
+
+#TODO
+# region Insertar/Actualizar/Borrar Prestamo
+#TODO
+@app.route('/insert_prestamo', methods=['POST'])
+def insert_prestamo():
+    data = request.get_json()
+    fechaInicio = data['fechaPrestamo']
+    fechaFin = data['fechaDev']
+    rut = data['rut']
+    numCopia = data['copia']
+
+    #Aquí se insertaría el prestamo en la base de datos
+    print('Fecha de inicio:', fechaInicio)
+    print('Fecha de fin:', fechaFin)
+    return {'success': True}
+
+#TODO
+@app.route('/update_prestamo', methods=['POST'])
+def update_prestamo():
+    data = request.get_json()
+    oldFechaInicio = data['oldFechaPrestamo']
+    oldFechaFin = data['oldFechaDev']
+    newFechaInicio = data['newFechaPrestamo']
+    newFechaFin = data['newFechaDev']
+
+    #Aquí se actualizaría el prestamo en la base de datos
+    print('Fecha de inicio anterior:', oldFechaInicio)
+    print('Fecha de fin anterior:', oldFechaFin)
+    print('Fecha de inicio nueva:', newFechaInicio)
+    print('Fecha de fin nueva:', newFechaFin)
+    return {'success': True}
+
+#TODO
+@app.route('/delete_prestamo', methods=['POST'])
+def delete_prestamo():
+    data = request.get_json()
+    fechaInicio = data['fechaPrestamo']
+    fechaFin = data['fechaDev']
+
+    #Aquí se borraría el prestamo de la base de datos
+    print('Fecha de inicio:', fechaInicio)
+    print('Fecha de fin:', fechaFin)
+    return {'success': True}
+# endregion
+
 
 if __name__ == '__main__':
     app.run(debug=True)
