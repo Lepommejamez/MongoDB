@@ -194,6 +194,7 @@ document.addEventListener('DOMContentLoaded', (event) =>
                 }
         });
 
+        //DONE
         // Codigo para modificar la tabla Autor
         document.getElementById('autorInsertarButton').addEventListener('click', function() {
             var autorName = document.getElementById('inputAutorInsertar1').value;
@@ -203,7 +204,30 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({name: autorName})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Ese autor ya existe.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
         document.getElementById('autorActualizarButton').addEventListener('click', function() {
@@ -215,7 +239,30 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({oldName: oldAuthorName, newName: newAuthorName})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Ese autor no existe.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
         document.getElementById('autorBorrarButton').addEventListener('click', function() {
@@ -226,7 +273,31 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({name: authorName})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            default:
+                                error();
+                                break;
+                            case '400':
+                                error("Ese autor no existe.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
         // Codigo para modificar la tabla Libro
@@ -240,7 +311,34 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({name: libroName , author: authorName, code: bookCode})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            default:
+                                error();
+                                break
+                            case '400':
+                                error("Ese autor no existe.");
+                                break;
+                                case '401':
+                                    error("Ese autor ya existe.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
         document.getElementById('libroActualizarButton').addEventListener('click', function() {
@@ -252,7 +350,31 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({oldName: oldBookName, newName: newBookName})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            default:
+                                error();
+                                break
+                            case '400':
+                                error("Ese libro no existe.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
         document.getElementById('libroBorrarButton').addEventListener('click', function() {
@@ -263,7 +385,31 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({name: bookName})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            default:
+                                error();
+                                break
+                            case '400':
+                                error("Ese libro no existe.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
         // Codigo para modificar la tabla Edicion
@@ -277,7 +423,30 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({code: cod, año: year, language: lang})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Esa edicion ya existe.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
         document.getElementById('edicionActualizarButton1').addEventListener('click', function() {
@@ -308,7 +477,30 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({prevCode: oldCod, code: cod, año: year, language: lang})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Esa edicion no existe.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                });
         });
 
         document.getElementById('edicionBorrarButton').addEventListener('click', function() {
@@ -319,7 +511,30 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({name: edName})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Esa edicion no existe.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                })
         });
 
          // Codigo para modificar la tabla Copia
@@ -346,6 +561,9 @@ document.addEventListener('DOMContentLoaded', (event) =>
                                 break;
                             case '401':
                                 error("La ISBN no existe");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
                                 break;
                             default:
                                 error();
@@ -380,6 +598,9 @@ document.addEventListener('DOMContentLoaded', (event) =>
                                 break;
                             case '401':
                                 error("Ese numero de copia no existe");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
                                 break;
                             default:
                                 error();
@@ -416,6 +637,9 @@ document.addEventListener('DOMContentLoaded', (event) =>
                                 break;
                             case '401':
                                 error("La ISBN no existe");
+                                break;
+                            case '500': 
+                                error("Por favor llene todos los campos.");
                                 break;
                             default:
                                 error();
@@ -456,7 +680,36 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({oldRUT: oldId, newRUT: newId, newName: sdkjnakdja})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Ese usuario no existe");
+                                break;
+                            case '401':
+                                error("La ISBN no existe");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                            case '402':
+                                error("Ese usuario ya existe");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                // Si el servidor devuelve un código de estado 2xx, se considera una respuesta exitosa
+                return response.json();
+                });
         });
 
         document.getElementById('usuarioBorrarButton').addEventListener('click', function() {
@@ -479,6 +732,9 @@ document.addEventListener('DOMContentLoaded', (event) =>
                                 break;
                             case '401':
                                 error("La ISBN no existe");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
                                 break;
                             default:
                                 error();
@@ -504,7 +760,7 @@ document.addEventListener('DOMContentLoaded', (event) =>
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({fechaPrestamo: fecha1, fechaDev: fecha1, rut: cod1, copia: cod2})
+                body: JSON.stringify({fechaPrestamo: fecha1, fechaDev: fecha2, rut: cod1, copia: cod2})
             })
             .then(response => 
                 {
@@ -520,6 +776,9 @@ document.addEventListener('DOMContentLoaded', (event) =>
                                 break;
                             case '402':
                                 error("Esa copia del libro ya esta prestada. Intenta de nuevo.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
                                 break;
                             default:
                                 error();
@@ -560,7 +819,35 @@ document.addEventListener('DOMContentLoaded', (event) =>
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({copia: id, date1: newDate1, date2: newDate2})
-            });
+            })
+            .then(response => 
+                {
+                    if (!response.ok) 
+                    {
+                        switch(String(response.status))
+                        {
+                            case '400':
+                                error("Copia no encontrada.");
+                                break;
+                            case '401':
+                                error("La ISBN no existe");
+                                break;
+                            case '402':
+                                error("Esa copia del libro ya esta prestada. Intenta de nuevo.");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
+                                break;
+                            default:
+                                error();
+                        }
+                    }
+                    else
+                    {
+                        success();
+                    }
+                return response.json();
+                })
         });
 
         document.getElementById('prestamoBorrarButton').addEventListener('click', function() {
@@ -583,6 +870,9 @@ document.addEventListener('DOMContentLoaded', (event) =>
                                 break;
                             case '401':
                                 error("La ISBN no existe");
+                                break;
+                            case '500':
+                                error("Por favor llene todos los campos.");
                                 break;
                             default:
                                 error();
