@@ -255,6 +255,8 @@ def insert_user():
     nombre = data['name']
     id = data['id']
 
+
+
     #Aquí se insertaría un usuario en la base de datos
     print('El nombre del usuario ingresado es: ' + nombre + ' con rut: ' + id)
     return jsonify({'success': True})
@@ -304,10 +306,10 @@ def update_usuario():
 @app.route('/delete_user', methods=['POST'])
 def delete_user():
     data = request.get_json()
-    nombre = data['name']
+    rut = data['rut']
 
     #Aquí se borraría el autor de la base de datos
-    print('Se va a borrar el usuario con el ID: ' + nombre)
+    print('Se va a borrar el usuario con el ID: ' + rut)
     return jsonify({'success': True})
 
 # endregion
