@@ -5,9 +5,12 @@
     <title>My Flask App</title>
     <script src="/static/main.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
 </head>
 <body>
     <h1>Welcome to my Flask app!</h1>
+
+<div id = "todo">
     <h2>Eliga que tabla desea modificar</h2>
     <select id="dropdown1" name="dropdownTabla">
         <option value="Autor">Autor</option>
@@ -29,20 +32,20 @@
 
         <div id = "autorInsertar">
             <h4>Insertar Autor</h4>
-            <input type="text" id="inputAutorInsertar1" placeholder="Ingrese nombre del autor">
+            <input type="text" id="inputAutorInsertar1" placeholder="Nombre del autor...">
             <button id="autorInsertarButton" type="button">Insertar</button>
         </div>
 
         <div id = "autorActualizar" style="display: none;">
             <h4>Actualizar Autor</h4>
-            <input type="text" id="inputAutorActualizar1" placeholder="Ingrese nombre anterior">
-            <input type="text" id="inputAutorActualizar2" placeholder="Ingrese nombre nuevo">
+            <input type="text" id="inputAutorActualizar1" placeholder="Nombre anterior...">
+            <input type="text" id="inputAutorActualizar2" placeholder="Nombre nuevo">
             <button id="autorActualizarButton" type="button">Actualizar</button>
         </div>
 
         <div id = "autorBorrar" style="display: none;">
             <h4>Borrar Autor</h4>
-            <input type="text" id="inputAutorBorrar" placeholder="Ingrese nombre del autor">
+            <input type="text" id="inputAutorBorrar" placeholder="Nombre del autor...">
             <button id="autorBorrarButton" type="button">Borrar</button>
         </div>
     </div>
@@ -195,6 +198,6 @@
             <button id="prestamoBorrarButton" type="button">Borrar</button>
         </div>
     </div>
-    
+</div>
 </body>
 </html>
