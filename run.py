@@ -455,10 +455,18 @@ def delete_prestamo():
         return make_response(jsonify({'success': False}), 400)
 # endregion
 
-@app.route('/getTableData')
+@app.route('/getTableData1')
 def consulta1():
     # Genera la matriz
-    matriz = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
+    matriz = [[1, 2, 3, 4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14], [15, 16, 17, 18, 19, 20, 21]]
+
+    # Devuelve la matriz en formato JSON
+    return jsonify(matriz)
+
+@app.route('/getTableData2')
+def consulta2():
+    # Genera la matriz
+    matriz = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
     # Devuelve la matriz en formato JSON
     return jsonify(matriz)

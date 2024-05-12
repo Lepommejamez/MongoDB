@@ -903,13 +903,65 @@ document.addEventListener('DOMContentLoaded', (event) =>
                 $('#consultasShow').show(); 
                 $('#todo2').hide();
                 $('#consultasHide').hide();
+                $('botonesConsulta').hide();
             });
         });
 
         $(document).ready(function() {
             $('#consulta1').click(function() {
+                // Define los nombres de las columnas
+                var columns = ["Titulo", "Autores", "Libros", "ISBN", "Año", "Idioma", "Numero Copia"];
+        
+                // Vacía el encabezado de la tabla
+                $('#miTabla thead').empty();
+        
+                // Crea el nuevo encabezado de la tabla
+                var header = '<tr>';
+                columns.forEach(function(column) {
+                    header += '<th>' + column + '</th>';
+                });
+                header += '</tr>';
+                $('#miTabla thead').append(header);
+        
                 $.ajax({
-                    url: '/getTableData',  // Ruta al servidor de Python
+                    url: '/getTableData1',  // Ruta al servidor de Python
+                    method: 'GET',
+                    success: function(data) {
+                        // Vacía el cuerpo de la tabla
+                        $('#miTabla tbody').empty();
+        
+                        // Llena la tabla con los datos recibidos
+                        data.forEach(function(row) {
+                            var html = '<tr>';
+                            row.forEach(function(cell) {
+                                html += '<td>' + cell + '</td>';
+                            });
+                            html += '</tr>';
+                            $('#miTabla tbody').append(html);
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $('#consulta2').click(function() {
+                // Define los nombres de las columnas
+                var columns = ["RUT", "Nombre Usuario", "Libro"];
+        
+                // Vacía el encabezado de la tabla
+                $('#miTabla thead').empty();
+        
+                // Crea el nuevo encabezado de la tabla
+                var header = '<tr>';
+                columns.forEach(function(column) {
+                    header += '<th>' + column + '</th>';
+                });
+                header += '</tr>';
+                $('#miTabla thead').append(header);
+        
+                $.ajax({
+                    url: '/getTableData2',  // Ruta al servidor de Python
                     method: 'GET',
                     success: function(data) {
                         // Vacía el cuerpo de la tabla

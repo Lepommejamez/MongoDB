@@ -64,6 +64,7 @@ table {
     border-spacing: 15px;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 
 #consultasShow {
@@ -89,7 +90,16 @@ table {
 }
 
 #botonesConsulta {
+    font-family: 'Calamity';
+    width: 40%;
+    display: flex;
     margin: auto;
     justify-content: center;
-    align-items: center;
+    align-items: bottom;
+    height: 5vh;
+}
+
+#consulta1, #consulta2 {
+    margin-right: 2.5px;
+    padding: 0px,10px; 
 }
