@@ -455,5 +455,13 @@ def delete_prestamo():
         return make_response(jsonify({'success': False}), 400)
 # endregion
 
+@app.route('/getTableData')
+def consulta1():
+    # Genera la matriz
+    matriz = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
+
+    # Devuelve la matriz en formato JSON
+    return jsonify(matriz)
+
 if __name__ == '__main__':
     app.run(debug=True)

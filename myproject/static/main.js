@@ -887,4 +887,45 @@ document.addEventListener('DOMContentLoaded', (event) =>
                 })
         })
 
+        //Obtener datos para la tabla
+        $(document).ready(function() {
+            $('#consultasShow').click(function() {
+                $('#todo').hide();
+                $('#consultasShow').hide();
+                $('#todo2').show();
+                $('#consultasHide').show();
+            });
+        });
+
+        $(document).ready(function() {
+            $('#consultasHide').click(function() {
+                $('#todo').show();
+                $('#consultasShow').show(); 
+                $('#todo2').hide();
+                $('#consultasHide').hide();
+            });
+        });
+
+        $(document).ready(function() {
+            $('#consulta1').click(function() {
+                $.ajax({
+                    url: '/getTableData',  // Ruta al servidor de Python
+                    method: 'GET',
+                    success: function(data) {
+                        // Vacía el cuerpo de la tabla
+                        $('#miTabla tbody').empty();
+        
+                        // Llena la tabla con los datos recibidos
+                        data.forEach(function(row) {
+                            var html = '<tr>';
+                            row.forEach(function(cell) {
+                                html += '<td>' + cell + '</td>';
+                            });
+                            html += '</tr>';
+                            $('#miTabla tbody').append(html);
+                        });
+                    }
+                });
+            });
+        });
     });
